@@ -6,6 +6,7 @@ class Client:
         self.host = host
         self.port = port
         self.connect()
+        self.run()
 
     def connect(self):
         self.client_socket = socket(AF_INET, SOCK_STREAM)
@@ -15,11 +16,13 @@ class Client:
             message = input('Digite o seu nome: ')
             if message:
                 self.client_socket.send(message.encode())
-                break
 
             received_message = self.client_socket.recv(1024).decode()
             if received_message == 'NOME_USADO':
                 print('Nome já utilizado. Tente novamente.')
+            elif received_message == 'NOME_OK':
+                print(f'Bem-vindo ao chat, {message}!')
+                break
 
     # ler comandos do usuario /lista para lista de contatos
     # /contato <nome> <mensagem> para enviar mensagem
@@ -35,6 +38,10 @@ class Client:
                     continue
                 contact, message = parts[1], parts[2]
                 self.send_message(contact, message)
+            elif command == '/sair':
+                print('Saindo do chat...')
+                self.close()
+                break
             else:
                 print('Comando inválido. Use /lista ou /contato <nome> <mensagem>.')
 
@@ -62,3 +69,7 @@ class Client:
         
     def close(self):
         self.client_socket.close()
+
+
+if __name__ == '__main__':
+    client = Client('172.29.10.79', 8082)

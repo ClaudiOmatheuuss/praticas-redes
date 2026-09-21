@@ -29,7 +29,7 @@ class Server:
             else:
                 self.clients[name] = client_socket
                 print(f'Cliente {name} conectado de {addr}')
-                client_socket.send('NOME_OK'.encode())
+                # client_socket.send('NOME_OK'.encode())
                 break
 
         # recebemos mensagens do cliente em loop
@@ -60,3 +60,7 @@ class Server:
         print(f'Cliente {name} desconectado')
         del self.clients[name]
         client_socket.close()
+
+
+if __name__ == '__main__':
+    server = Server('0.0.0.0', 8082)
