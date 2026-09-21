@@ -22,7 +22,7 @@ def handle_client(client_socket, addr):
             client_socket.close()
             break
 
-def run_server(handle_client):
+def run_server():
     server_socket = socket(AF_INET, SOCK_STREAM)
     server_socket.bind(('0.0.0.0', 8080))
     server_socket.listen()
@@ -37,4 +37,4 @@ def run_server(handle_client):
         t.start()
 
 if __name__ == '__main__':
-    run_server(handle_client)
+    run_server()
